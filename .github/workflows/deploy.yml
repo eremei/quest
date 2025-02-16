@@ -20,7 +20,7 @@ jobs:
           server: ${{ secrets.FTP_HOST }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          server-dir: /quest/public_html/ # Убедись, что этот путь верный
+          server-dir: /
           exclude: |
             **/.git*
             **/.git*/**
