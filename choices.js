@@ -1,34 +1,27 @@
 // === choices.js ===
-// Управляет кнопками выбора в истории
+// Обработка выбора пользователя в квесте
 
-function processChoices() {
-  const choicesContainer = document.getElementById("choicesContainer");
-  choicesContainer.innerHTML = ""; // Очищаем старые кнопки
+import { continueStory } from "./story.js";
+import { saveStory } from "./save.js";
 
-  if (!story || story.currentChoices.length === 0) {
-    console.log("🔚 Выборов нет, ждем продолжения...");
-    return;
-  }
-
-  story.currentChoices.forEach((choice, idx) => {
-    console.log(`🔘 Добавляем кнопку: ${choice.text}`);
-
-    const btn = document.createElement("button");
-    btn.className = "uk-button uk-button-primary uk-margin-small-right";
-    btn.textContent = choice.text;
-    btn.addEventListener("click", () => handleChoice(idx));
-
-    choicesContainer.appendChild(btn);
-  });
-}
-
-function handleChoice(choiceIndex) {
+export function handleChoiceSelection(choiceIndex) {
   try {
+    if (!story) {
+      console.error("❌ Ошибка: история не загружена!");
+      return;
+    }
+    
+    if (choiceIndex < 0 || choiceIndex >= story.currentChoices.length) {
+      console.error("❌ Ошибка: неверный индекс выбора!", choiceIndex);
+      return;
+    }
+    
+    console.log(`🔘 Выбран вариант: ${story.currentChoices[choiceIndex].text}`);
     story.ChooseChoiceIndex(choiceIndex);
-    saveStory(); // Сохраняем состояние
+    saveStory();
     continueStory();
   } catch (error) {
-    console.error("❌ Ошибка выбора:", error);
-    alert("⚠️ Произошла ошибка, попробуйте еще раз.");
+    console.error("❌ Ошибка при обработке выбора:", error);
+    alert("⚠️ Произошла ошибка при выборе. Попробуйте еще раз.");
   }
 }

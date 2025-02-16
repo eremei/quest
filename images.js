@@ -1,5 +1,5 @@
 // === images.js ===
-// Управление загрузкой и отображением изображений в истории
+// Управление загрузкой и отображением изображений в квесте
 
 const imageCache = new Set();
 const preloadedImages = new Set();
@@ -20,11 +20,8 @@ const ALL_IMAGES = [
   "images/work_until_lunch.png"
 ];
 
-/**
- * Предзагрузка всех изображений
- */
 export function preloadAllImages() {
-  console.log("🔄 Подгружаем изображения...");
+  console.log("🔄 Предзагрузка изображений...");
   ALL_IMAGES.forEach(imagePath => {
     if (!preloadedImages.has(imagePath)) {
       const img = new Image();
@@ -35,13 +32,9 @@ export function preloadAllImages() {
   });
 }
 
-/**
- * Отображение изображения в истории
- * @param {string} imagePath - Путь к изображению
- */
 export function displayImage(imagePath) {
   if (!imageCache.has(imagePath)) {
-    console.log(`🖼 Добавляем картинку: ${imagePath}`);
+    console.log(`🖼 Добавляем изображение: ${imagePath}`);
     const img = document.createElement("img");
     img.src = imagePath;
     img.className = "uk-margin uk-responsive-img";

@@ -1,62 +1,84 @@
 // === story.js ===
-// Управляет историей и загрузкой InkJS
+// Управление историей квеста
+
+import { saveStory, loadStory } from "./save.js";
+import { preloadAllImages, displayImage } from "./images.js";
+import { handleChoiceSelection } from "./choices.js";
 
 let story;
 
-function loadStory() {
+export function startStory(storyContent) {
   try {
-    console.log("🔄 Загружаем историю...");
+    console.log("📖 Инициализация истории...");
     story = new inkjs.Story(storyContent);
-    console.log("✅ История загружена:", story);
-    return true;
+    
+    if (!loadStory()) {
+      console.warn("⚠️ Нет сохранения, начинаем заново.");
+    }
+    
+    continueStory();
+    setTimeout(preloadAllImages, 2000);
   } catch (error) {
-    console.error("❌ Ошибка при загрузке истории:", error);
+    console.error("❌ Ошибка загрузки истории:", error);
     alert("⚠️ Ошибка загрузки истории. Попробуйте обновить страницу.");
-    return false;
   }
 }
 
-function continueStory() {
+export function continueStory() {
+  const storyContainer = document.getElementById("storyContainer");
+  const choicesContainer = document.getElementById("choicesContainer");
+  choicesContainer.innerHTML = "";
+
   try {
-    if (!story || !story.canContinue) return;
-    
+    if (!story || !story.canContinue) {
+      console.warn("⚠️ История завершена или не может продолжиться!");
+      return;
+    }
+
     let newText = [];
     let lastImage = null;
 
     while (story.canContinue) {
       const paragraphText = story.Continue();
-      console.log("📝 Добавлен текст:", paragraphText);
+      saveStory();
       newText.push(paragraphText);
 
-      if (story.currentTags) {
-        story.currentTags.forEach(tag => {
-          if (tag.startsWith("IMAGE:")) {
-            lastImage = tag.replace("IMAGE:", "").trim();
-            console.log("🖼 Найдено изображение:", lastImage);
-          }
-        });
-      }
+      story.currentTags.forEach(tag => {
+        if (tag.startsWith("IMAGE:")) {
+          lastImage = tag.replace("IMAGE:", "").trim();
+        }
+      });
     }
+
+    storyContainer.innerHTML = "";
 
     if (lastImage) {
       displayImage(lastImage);
     }
 
     newText.forEach(text => {
-      addParagraphToStory(text);
+      const p = document.createElement("p");
+      p.textContent = text;
+      storyContainer.appendChild(p);
     });
 
-    processChoices();
+    if (story.currentChoices.length > 0) {
+      story.currentChoices.forEach((choice, idx) => {
+        const btn = document.createElement("button");
+        btn.className = "uk-button uk-button-primary uk-margin-small-right";
+        btn.textContent = choice.text;
+        btn.addEventListener("click", () => {
+          handleChoiceSelection(idx);
+          continueStory();
+          saveStory();
+        });
+        choicesContainer.appendChild(btn);
+      });
+    }
   } catch (error) {
     console.error("❌ Ошибка в обработке истории:", error);
     alert("⚠️ Ошибка в истории. Перезапуск.");
-    restartStory();
+    localStorage.removeItem("tarolog_save");
+    location.reload();
   }
-}
-
-function restartStory() {
-  console.warn("🔄 Перезапускаем историю...");
-  localStorage.removeItem(STORAGE_KEY);
-  loadStory();
-  continueStory();
 }

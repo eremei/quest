@@ -1,44 +1,32 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8" />
-  <title>Таролог и развод Марии</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <!-- Подключаем UIkit CSS -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.16.11/dist/css/uikit.min.css" />
-
-  <!-- Ваши стили -->
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <title>Таролог и развод Марии</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Подключаем UIkit CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.16.11/dist/css/uikit.min.css">
+    <!-- Ваши стили -->
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
 <div class="uk-container uk-margin-top">
-  <h1 class="uk-heading-line uk-text-center"><span>Таролог и развод Марии</span></h1>
-
-  <!-- В этом блоке будет сам текст квеста (прокрутка) -->
-  <div id="storyContainer" class="uk-margin uk-card uk-card-default uk-card-body">
-    <!-- Текст квеста будет вставляться из main.js -->
-  </div>
-
-  <!-- В этом блоке будет выводиться выбор / кнопки -->
-  <div id="choicesContainer" class="uk-margin uk-button-group">
-    <!-- Выборы (ссылки/кнопки) вставляются скриптом -->
-  </div>
+    <h1 class="uk-heading-line uk-text-center"><span>Таролог и развод Марии</span></h1>
+    <!-- В этом блоке будет сам текст квеста (прокрутка) -->
+    <div id="storyContainer" class="uk-margin uk-card uk-card-default uk-card-body">
+        <!-- Текст квеста будет вставляться из main.js -->
+    </div>
+    <!-- В этом блоке будет выводиться выбор / кнопки -->
+    <div id="choicesContainer" class="uk-margin uk-button-group">
+        <!-- Выборы (ссылки/кнопки) вставляются скриптом -->
+    </div>
 </div>
-
 <!-- Подключаем UIkit JS -->
 <script src="https://cdn.jsdelivr.net/npm/uikit@3.16.11/dist/js/uikit.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/uikit@3.16.11/dist/js/uikit-icons.min.js"></script>
-
 <!-- Подключаем ink.js -->
 <script src="ink.js"></script>
-
-<!-- Подключаем квест (Ваш JSON-файл "Таролог и развод Марии.js") -->
-<script src="Таролог и развод Марии.js"></script>
-
-<!-- Подключаем наш скрипт main.js -->
-<script src="main.js"></script>
-
+<!-- Подключаем основной скрипт -->
+<script type="module" src="main.js"></script>
 </body>
 </html>
