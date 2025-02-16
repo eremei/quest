@@ -1,6 +1,8 @@
 // === save.js ===
 // Управляет сохранением и загрузкой состояния игры
 
+import { story } from './story.js';
+
 const STORAGE_KEY = "tarolog_save";
 
 export function saveStory() {

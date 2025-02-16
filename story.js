@@ -1,16 +1,19 @@
 // === story.js ===
 // Управление историей квеста
 
+import { Story } from "./ink.js"; // ✅ Исправлен импорт ink.js
+import storyContent from "./Таролог и развод Марии.js"; // ✅ Загружаем саму историю
+
 import { saveStory, loadStory } from "./save.js";
 import { preloadAllImages, displayImage } from "./images.js";
 import { handleChoiceSelection } from "./choices.js";
 
-let story;
+export let story; // ✅ Экспортируем story
 
-export function startStory(storyContent) {
+export function startStory() {
   try {
     console.log("📖 Инициализация истории...");
-    story = new inkjs.Story(storyContent);
+    story = new Story(storyContent); // ✅ Инициализируем историю здесь
     
     if (!loadStory()) {
       console.warn("⚠️ Нет сохранения, начинаем заново.");
