@@ -1,8 +1,8 @@
 // === story.js ===
 // Управление историей квеста
 
-import * as inkjs from "./ink.js"; // ✅ Импорт ink.js
-import storyContent from "./Таролог и развод Марии.js"; // ✅ История
+import inkjs from "./ink.js"; // ✅ Исправленный импорт InkJS
+import storyContent from "./Таролог и развод Марии.js";
 
 import { saveStory, loadStory } from "./save.js";
 import { preloadAllImages, displayImage } from "./images.js";
@@ -13,12 +13,12 @@ export let story;
 export function startStory() {
   try {
     console.log("📖 Инициализация истории...");
-    story = new inkjs.Story(storyContent); // ✅ Используем inkjs.Story
-    
+    story = new inkjs.Story(storyContent); // ✅ Теперь InkJS импортирован корректно
+
     if (!loadStory()) {
       console.warn("⚠️ Нет сохранения, начинаем заново.");
     }
-    
+
     continueStory();
     setTimeout(preloadAllImages, 2000);
   } catch (error) {
