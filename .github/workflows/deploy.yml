@@ -1,0 +1,23 @@
+name: 🚀 Deploy to Timeweb FTP
+
+on:
+  push:
+    branches:
+      - main  # Деплой с главной ветки
+
+jobs:
+  ftp-deploy:
+    name: 📤 Upload to FTP
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📥 Checkout repository
+        uses: actions/checkout@v3
+
+      - name: 🚀 Deploy to FTP server
+        uses: SamKirkland/FTP-Deploy-Action@v4
+        with:
+          server: ${{ secrets.FTP_HOST }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          server-dir: /quest/public_html/ # Путь к сайту (проверь в хостинге)
