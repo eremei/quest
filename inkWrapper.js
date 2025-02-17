@@ -1,5 +1,3 @@
 // inkWrapper.js
-// Импортируем исходный ink.js как модуль
-import Ink from './ink.js';
-// Экспортируем нужный класс (например, Story)
-export const Story = Ink.Story;
+import Ink from './ink.js';  // Импортируем default-экспорт из оригинального ink.js
+export const Story = Ink.Story;  // Экспортируем только нужное свойство Story
